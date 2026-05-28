@@ -1,9 +1,15 @@
 public class Principal {
-public static void main(String[] args) {
-    Pessoas p1 = new Pessoas();
-    Pessoas p2 = new Pessoas();
-    
-    p1.mostrarPessoas();
-    p2.mostrarPessoas();
+
+    public static void main(String[] args) {
+
+        Pessoa p1 = new Pessoa();
+
+        TeleSena t1 = new TeleSena();
+        TeleSena t2 = new TeleSena();
+
+        p1.comprarTeleSena(t1);
+        p1.comprarTeleSena(t2);
+
+        p1.mostrarPessoa();
     }
 }
