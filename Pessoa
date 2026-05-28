@@ -1,1 +1,89 @@
+import java.util.Random;
 
+public class Pessoa {
+
+    // Atributos
+    private String nome;
+    private TeleSena[] telesenas;
+    private double premioRecebido;
+    private int quantidadeTeleSenas;
+
+    // Construtor
+    public Pessoa() {
+
+        this.nome = gerarNome();
+
+        // Cada pessoa pode ter até 10 Tele Senas
+        this.telesenas = new TeleSena[10];
+
+        this.premioRecebido = 0;
+
+        this.quantidadeTeleSenas = 0;
+    }
+
+    // Gerador de nome
+    public String gerarNome() {
+
+        String[] nomes = {
+            "Bruno", "Carlos", "Diana", "Eduardo",
+            "Fernanda", "Gabriel", "Lucas",
+            "Miguel", "Maria", "Matheus"
+        };
+
+        String[] sobrenomes = {
+            "Silva", "Santos", "Oliveira",
+            "Souza", "Ferreira", "Alves"
+        };
+
+        Random random = new Random();
+
+        int indiceNome = random.nextInt(nomes.length);
+        int indiceSobrenome = random.nextInt(sobrenomes.length);
+
+        return nomes[indiceNome] + " " + sobrenomes[indiceSobrenome];
+    }
+
+    // Adiciona uma Tele Sena
+    public void comprarTeleSena(TeleSena t) {
+
+        if (quantidadeTeleSenas < telesenas.length) {
+
+            telesenas[quantidadeTeleSenas] = t;
+
+            quantidadeTeleSenas++;
+        }
+    }
+
+    // Mostrar dados da pessoa
+    public void mostrarPessoa() {
+
+        System.out.println("Nome: " + nome);
+
+        System.out.println("Quantidade de Tele Senas: " + quantidadeTeleSenas);
+
+        System.out.println("Prêmio recebido: R$ " + premioRecebido);
+
+        // Mostrar Tele Senas
+        for (int i = 0; i < quantidadeTeleSenas; i++) {
+
+            System.out.println("\nTele Sena " + (i + 1));
+
+            telesenas[i].mostrarTeleSena();
+        }
+    }
+
+    // Getter do nome
+    public String getNome() {
+        return nome;
+    }
+
+    // Getter do prêmio
+    public double getPremioRecebido() {
+        return premioRecebido;
+    }
+
+    // Setter do prêmio
+    public void setPremioRecebido(double premioRecebido) {
+        this.premioRecebido = premioRecebido;
+    }
+}
