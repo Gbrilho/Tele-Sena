@@ -1,0 +1,9 @@
+public class Principal {
+public static void main(String[] args) {
+    Pessoas p1 = new Pessoas();
+    Pessoas p2 = new Pessoas();
+    
+    p1.mostrarPessoas();
+    p2.mostrarPessoas();
+    }
+}
