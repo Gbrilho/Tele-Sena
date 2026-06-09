@@ -1,0 +1,192 @@
+import java.util.ArrayList;
+
+public class ControleTeleSena {
+
+    private Pessoa[] pessoas;
+    private int quantidadeVendidas;
+    private double valorTotalVendas;
+    private double lucro;
+
+    public ControleTeleSena() {
+
+        pessoas = new Pessoa[20];
+
+        quantidadeVendidas = 0;
+        valorTotalVendas = 0;
+        lucro = 0;
+    }
+
+    // Cria as pessoas e vende as Tele Senas
+    public void venderTeleSenas() {
+
+        for (int i = 0; i < pessoas.length; i++) {
+
+            pessoas[i] = new Pessoa();
+
+            int quantidade = (int) (Math.random() * 15 + 1);
+
+            for (int j = 0; j < quantidade; j++) {
+
+                if (quantidadeVendidas < 300) {
+
+                    pessoas[i].comprarTeleSena(new TeleSena());
+
+                    quantidadeVendidas++;
+                }
+            }
+        }
+
+        valorTotalVendas = quantidadeVendidas * TeleSena.VALOR;
+    }
+
+    // Faz o sorteio
+    public void realizarSorteio() {
+
+        int[] numerosSorteados = new int[60];
+        int quantidadeSorteados = 25;
+
+        gerarNumerosSorteados(numerosSorteados, quantidadeSorteados);
+
+        ArrayList<Pessoa> ganhadores = verificarGanhadores(numerosSorteados, quantidadeSorteados);
+
+        while (ganhadores.size() == 0) {
+
+            int numero;
+
+            do {
+                numero = (int) (Math.random() * 60 + 1);
+            } while (numeroExiste(numerosSorteados, quantidadeSorteados, numero));
+
+            numerosSorteados[quantidadeSorteados] = numero;
+            quantidadeSorteados++;
+
+            ganhadores = verificarGanhadores(numerosSorteados, quantidadeSorteados);
+        }
+
+        calcularPremios(ganhadores);
+
+        mostrarResultado(numerosSorteados, quantidadeSorteados, ganhadores);
+    }
+
+    // Gera os primeiros 25 números
+    private void gerarNumerosSorteados(int[] numeros, int quantidade) {
+
+        int contador = 0;
+
+        while (contador < quantidade) {
+
+            int numero = (int) (Math.random() * 60 + 1);
+
+            if (!numeroExiste(numeros, contador, numero)) {
+
+                numeros[contador] = numero;
+                contador++;
+            }
+        }
+    }
+
+    private boolean numeroExiste(int[] vetor, int tamanho, int numero) {
+
+        for (int i = 0; i < tamanho; i++) {
+
+            if (vetor[i] == numero) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Procura os ganhadores
+    private ArrayList<Pessoa> verificarGanhadores(int[] sorteados, int quantidade) {
+
+        ArrayList<Pessoa> ganhadores = new ArrayList<>();
+
+        for (Pessoa pessoa : pessoas) {
+
+            TeleSena[] teleSenas = pessoa.getTeleSenas();
+
+            for (int i = 0; i < pessoa.getQuantidadeTeleSenas(); i++) {
+
+                TeleSena t = teleSenas[i];
+
+                if (conferirJogo(t.getJogo1(), sorteados, quantidade)
+                        || conferirJogo(t.getJogo2(), sorteados, quantidade)) {
+
+                    if (!ganhadores.contains(pessoa)) {
+                        ganhadores.add(pessoa);
+                    }
+                }
+            }
+        }
+
+        return ganhadores;
+    }
+
+    // Verifica se um jogo acertou todos os números sorteados
+    private boolean conferirJogo(int[] jogo, int[] sorteados, int quantidade) {
+
+        for (int i = 0; i < jogo.length; i++) {
+
+            boolean encontrou = false;
+
+            for (int j = 0; j < quantidade; j++) {
+
+                if (jogo[i] == sorteados[j]) {
+                    encontrou = true;
+                    break;
+                }
+            }
+
+            if (!encontrou) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // Calcula os prêmios
+    private void calcularPremios(ArrayList<Pessoa> ganhadores) {
+
+        double premioTotal = valorTotalVendas * 0.8;
+
+        double premioPorPessoa = premioTotal / ganhadores.size();
+
+        for (Pessoa p : ganhadores) {
+            p.setPremioRecebido(premioPorPessoa);
+        }
+
+        lucro = valorTotalVendas - premioTotal;
+    }
+
+    // Mostra o resultado final
+    private void mostrarResultado(int[] sorteados, int quantidade,
+                                  ArrayList<Pessoa> ganhadores) {
+
+        System.out.println("RESULTADO");
+
+        System.out.print("Números sorteados: ");
+
+        for (int i = 0; i < quantidade; i++) {
+            System.out.print(sorteados[i] + " ");
+        }
+
+        System.out.println();
+
+        System.out.println("\nTele Senas vendidas: " + quantidadeVendidas);
+
+        System.out.println("Quantidade de ganhadores: " + ganhadores.size());
+
+        System.out.println("Valor total vendido: R$ " + valorTotalVendas);
+
+        for (Pessoa p : ganhadores) {
+
+            System.out.println("\nGanhador: " + p.getNome());
+
+            System.out.println("Prêmio: R$ " + p.getPremioRecebido());
+        }
+
+        System.out.println("\nLucro: R$ " + lucro);
+    }
+}
