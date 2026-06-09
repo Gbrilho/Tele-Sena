@@ -2,14 +2,10 @@ public class Principal {
 
     public static void main(String[] args) {
 
-        Pessoa p1 = new Pessoa();
+        ControleTeleSena controle = new ControleTeleSena();
 
-        TeleSena t1 = new TeleSena();
-        TeleSena t2 = new TeleSena();
+        controle.venderTeleSenas();
 
-        p1.comprarTeleSena(t1);
-        p1.comprarTeleSena(t2);
-
-        p1.mostrarPessoa();
+        controle.realizarSorteio();
     }
 }
