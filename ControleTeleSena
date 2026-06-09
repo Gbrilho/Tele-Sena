@@ -164,7 +164,7 @@ public class ControleTeleSena {
     private void mostrarResultado(int[] sorteados, int quantidade,
                                   ArrayList<Pessoa> ganhadores) {
 
-        System.out.println("RESULTADO");
+        System.out.println("===RESULTADO===");
 
         System.out.print("Números sorteados: ");
 
@@ -182,11 +182,11 @@ public class ControleTeleSena {
 
         for (Pessoa p : ganhadores) {
 
-            System.out.println("\nGanhador: " + p.getNome());
+            System.out.println("Ganhador(a): " + p.getNome());
 
             System.out.println("Prêmio: R$ " + p.getPremioRecebido());
         }
 
-        System.out.println("\nLucro: R$ " + lucro);
+        System.out.println("Lucro: R$ " + lucro);
     }
 }
