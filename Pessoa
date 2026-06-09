@@ -13,26 +13,27 @@ public class Pessoa {
 
         this.nome = gerarNome();
 
-        // Cada pessoa pode ter até 10 Tele Senas
-        this.telesenas = new TeleSena[10];
+        // Cada pessoa pode comprar até 15 Tele Senas
+        this.telesenas = new TeleSena[15];
 
         this.premioRecebido = 0;
-
         this.quantidadeTeleSenas = 0;
     }
 
-    // Gerador de nome
-    public String gerarNome() {
+    // Gera um nome aleatório
+    private String gerarNome() {
 
         String[] nomes = {
-            "Bruno", "Carlos", "Diana", "Eduardo",
-            "Fernanda", "Gabriel", "Lucas",
-            "Miguel", "Maria", "Matheus"
+                "Bruno", "Carlos", "Diana", "Eduardo",
+                "Fernanda", "Gabriel", "Lucas",
+                "Miguel", "Maria", "Matheus",
+                "Ana", "Julia", "Pedro", "Rafael"
         };
 
         String[] sobrenomes = {
-            "Silva", "Santos", "Oliveira",
-            "Souza", "Ferreira", "Alves"
+                "Silva", "Santos", "Oliveira",
+                "Souza", "Ferreira", "Alves",
+                "Costa", "Lima"
         };
 
         Random random = new Random();
@@ -43,46 +44,47 @@ public class Pessoa {
         return nomes[indiceNome] + " " + sobrenomes[indiceSobrenome];
     }
 
-    // Adiciona uma Tele Sena
+    // Adiciona uma Tele Sena à pessoa
     public void comprarTeleSena(TeleSena t) {
 
         if (quantidadeTeleSenas < telesenas.length) {
 
             telesenas[quantidadeTeleSenas] = t;
-
             quantidadeTeleSenas++;
         }
     }
 
-    // Mostrar dados da pessoa
+    // Mostra os dados da pessoa
     public void mostrarPessoa() {
 
         System.out.println("Nome: " + nome);
-
         System.out.println("Quantidade de Tele Senas: " + quantidadeTeleSenas);
-
         System.out.println("Prêmio recebido: R$ " + premioRecebido);
 
-        // Mostrar Tele Senas
         for (int i = 0; i < quantidadeTeleSenas; i++) {
 
             System.out.println("\nTele Sena " + (i + 1));
 
-            telesenas[i].mostrarTeleSena();
+            telesenas[i].mostrarNumeros();
         }
     }
 
-    // Getter do nome
     public String getNome() {
         return nome;
     }
 
-    // Getter do prêmio
+    public TeleSena[] getTeleSenas() {
+        return telesenas;
+    }
+
+    public int getQuantidadeTeleSenas() {
+        return quantidadeTeleSenas;
+    }
+
     public double getPremioRecebido() {
         return premioRecebido;
     }
 
-    // Setter do prêmio
     public void setPremioRecebido(double premioRecebido) {
         this.premioRecebido = premioRecebido;
     }
