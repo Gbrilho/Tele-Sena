@@ -1,0 +1,71 @@
+public class TeleSena {
+
+    // Valor fixo de cada Tele Sena
+    public static final double VALOR = 10.0;
+
+    private int[] jogo1;
+    private int[] jogo2;
+
+    public TeleSena() {
+        jogo1 = new int[25];
+        jogo2 = new int[25];
+
+        gerarNumeros(jogo1);
+        gerarNumeros(jogo2);
+    }
+
+    // Gera 25 números sem repetição
+    private void gerarNumeros(int[] jogo) {
+
+        int quantidade = 0;
+
+        while (quantidade < jogo.length) {
+
+            int numero = (int)(Math.random() * 60 + 1);
+
+            boolean repetido = false;
+
+            // Verifica se o número já existe no vetor
+            for (int i = 0; i < quantidade; i++) {
+                if (jogo[i] == numero) {
+                    repetido = true;
+                    break;
+                }
+            }
+
+            // Adiciona o número caso não esteja repetido
+            if (!repetido) {
+                jogo[quantidade] = numero;
+                quantidade++;
+            }
+        }
+    }
+
+    public int[] getJogo1() {
+        return jogo1;
+    }
+
+    public int[] getJogo2() {
+        return jogo2;
+    }
+
+    // Mostra os números da Tele Sena
+    public void mostrarNumeros() {
+
+        System.out.println("Jogo 1:");
+
+        for (int numero : jogo1) {
+            System.out.print(numero + " ");
+        }
+
+        System.out.println("\n");
+
+        System.out.println("Jogo 2:");
+
+        for (int numero : jogo2) {
+            System.out.print(numero + " ");
+        }
+
+        System.out.println();
+    }
+}
